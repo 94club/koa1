@@ -5,7 +5,6 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-
 const { historyApiFallback } = require('koa2-connect-history-api-fallback');
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -33,7 +32,7 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-// app.use(index.routes(), index.allowedMethods())
+app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(historyApiFallback({ 
   whiteList: ['/api'],
@@ -52,4 +51,7 @@ app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
 });
 
+app.listen(3000, () => {
+  console.log('port3000connected')
+})
 module.exports = app
