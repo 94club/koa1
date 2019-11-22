@@ -32,18 +32,18 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
 app.use(historyApiFallback({ 
   whiteList: ['/api'],
   htmlAcceptHeaders: ['text/html', 'application/xhtml+xml'], // 覆盖Accepts，更改请求的dataType配置
-  index: 'index.html'
-  // rewrites: [// 通过正则配置，配置相关路由
+  // index: 'index.html'
+  // rewrites: [// 通过正则配置，配置相关后端路由
   //   {
-  //   from: '/',
-  //   to: '/index.html'
+  //   from: '/aaa',
+  //   to: '/'
   // }]
 }));
+app.use(index.routes(), index.allowedMethods())
+app.use(users.routes(), users.allowedMethods())
 app.use(require('koa-static')(__dirname + '/public'))
 
 // error-handling
@@ -51,7 +51,4 @@ app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
 });
 
-app.listen(3000, () => {
-  console.log('port3000connected')
-})
 module.exports = app
